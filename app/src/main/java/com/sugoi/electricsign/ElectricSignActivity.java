@@ -68,22 +68,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ElectricSignActivity extends Activity implements TextWatcher
-{ //boolean flag = false;
+{    boolean started = false;
 
-    //boolean flag2 = false;
+     boolean ended = false;
 	
 	@Override
 		public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-		 Toast.makeText(getApplicationContext(), "SUPER" + String.valueOf(keyCode), 4).show();
+		 //Toast.makeText(getApplicationContext(), "SUPER" + String.valueOf(keyCode), 4).show();
 		return true;
 	}
 
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        boolean handled = true;
-        Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
+        boolean handled = false;
+
+		if (keyCode == 95 ) {
+			
+			ElectricSignActivity.this.startDisplay();
+		
+			
+		}
+       // Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
         //System.out.println(keyCode);
-        return true;
+        return false;
 		// super.onKeyDown(keyCode, event);
 
     }
@@ -163,7 +170,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 				}
 
 				TextView title = new TextView(this);
-				title.setText("Electric Sign "+versionString);
+				title.setText("Quote Frame "+versionString);
 				title.setGravity(Gravity.CENTER);
 				title.setTextSize((_width>=600)?48:24);
 				
@@ -430,6 +437,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	public void startDisplay() {
 		saveSettings();
+		
 
 		DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
 		
@@ -756,17 +764,17 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 	private void loadSettings() 
 	{
 		SharedPreferences s = getSharedPreferences(PREFS_NAME, 0);
-		_launchAtStartupSetting.setChecked(  s.getBoolean("launchAtStartup",      false));
-		_allowSleepSetting.setChecked(       s.getBoolean("allowSleep",           true));
+		_launchAtStartupSetting.setChecked(  s.getBoolean("launchAtStartup",      true));
+		_allowSleepSetting.setChecked(       s.getBoolean("allowSleep",           false));
 		_writeScreenSaverSetting.setChecked( s.getBoolean("writeScreenSaver",     true));
-		_urlSetting.setText(                 s.getString( "url",                  "http://news.google.com/"));
+		_urlSetting.setText(                 s.getString( "url",                  "http://192.168.1.13:1880/nook_display"));
 		_includeStatusTextSetting.setChecked(s.getBoolean("includestatustext",    true));
 		_filePathSetting.setText(            s.getString( "filepath",             "/media/screensavers/ElectricSign/Sign.png"));
-		_enableSelfStartSetting.setChecked(  s.getBoolean("selfstart",            false));
-		_enableBetweenSetting.setChecked(    s.getBoolean("enablebetween",        false));
-		setSpinnerSettingWithDefault(_freqCountSetting, s.getString("freq",  ""), "5");
+		_enableSelfStartSetting.setChecked(  s.getBoolean("selfstart",            true));
+		_enableBetweenSetting.setChecked(    s.getBoolean("enablebetween",        true));
+		setSpinnerSettingWithDefault(_freqCountSetting, s.getString("freq",  ""), "10");
 		setSpinnerSettingWithDefault(_freqUnitsSetting, s.getString("units", ""), "Minute(s)");
-		setSpinnerSettingWithDefault(_betweenStartSetting, s.getString("betweenstart", ""), "6 AM");
+		setSpinnerSettingWithDefault(_betweenStartSetting, s.getString("betweenstart", ""), "8 AM");
 		setSpinnerSettingWithDefault(_betweenEndSetting,   s.getString("betweenend",   ""), "9 PM");
 	}
 
@@ -837,7 +845,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	private void setSelfStartEnabled(boolean c)
 	{
-		_selfStartCount = 5 ;
+		_selfStartCount = 20 ;
 		updateSelfStartText();
 		scheduleSelfStartTick();
 	}
@@ -1007,7 +1015,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
     private int _screenTouchCount = 0;
     
 	private Button _goButton;
-	private int _selfStartCount = 5;
+	private int _selfStartCount = 3;
 	private int _downloadErrorCount = 1;  // 1 to avoid any chance of saving an image before download starts
 	private long _webViewDownloadErrorTimeStamps[] = new long[2];
 }
