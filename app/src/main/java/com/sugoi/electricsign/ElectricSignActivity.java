@@ -7,11 +7,14 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.IOException;
 import java.net.URL;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import java.net.URLConnection;
+import java.net.HttpURLConnection;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -88,6 +91,10 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		
 			
 		}
+
+		ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
+		
+
        // Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
         //System.out.println(keyCode);
         return false;
@@ -450,7 +457,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		if ((isLaunchAtStartup())&&(_enableSelfStartSetting.isChecked()))
 		{
-			DoLogInfo("Arming the 24-hour watchdog.");
+			DoLogInfo("MNirmal Arming the 24-hour watchdog.");
 			_alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), (24*60*60*1000), pendingIntent);
 		}
 		else 
@@ -473,6 +480,33 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		_nextUpdateTime = scheduleReload(0);  // schedule a download for ASAP
 		if (isSleepAllowed() == false) setKeepScreenAwake(true);
 	}
+
+
+	public String getJSON(String url) {
+    HttpURLConnection c = null;
+    try {
+        URL u = new URL(url);
+        c = (HttpURLConnection) u.openConnection();
+        c.setRequestMethod("GET");
+        c.setRequestProperty("Content-Type", "application/json; utf-8");
+        c.setRequestProperty("Accept", "application/json");
+        c.connect();
+        int status = c.getResponseCode();
+
+    } catch (IOException ex) {
+        
+    } finally {
+        if (c != null) {
+            try {
+                c.disconnect();
+            } catch (Exception ex) {
+                
+            }
+        }
+    }
+    return null;
+}
+
 
 	public void onDestroy() {
 		unregisterReceiver(_alarmReceiver);
