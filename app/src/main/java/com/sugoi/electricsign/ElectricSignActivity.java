@@ -426,7 +426,9 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		if (isSleepAllowed())
 		{
 			DoLogDebug("Sign update complete, turning off Wifi and going to sleep for "+desc+".");
-			WifiManager wifi = (WifiManager) ElectricSignActivity.this.getSystemService(Context.WIFI_SERVICE);              
+			WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+
 			wifi.setWifiEnabled(false);   // disable wifi between refreshes, to save power
 			setKeepScreenAwake(false);    // back to sleep until next time!   
 			_wifiShouldWorkAtTime = 0;    // note that we're not waiting for Wifi to start up anymore
@@ -571,7 +573,8 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	public void doReload() 
 	{
-		WifiManager wifi = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
 		if ((isSleepAllowed())&&(isConnectedToNetwork(this) == false)&&(wifi.isWifiEnabled() == false))
 		{
 			_wifiAttemptNumber++;
