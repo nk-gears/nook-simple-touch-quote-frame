@@ -84,16 +84,10 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean handled = false;
-
 		if (keyCode == 95 ) {
-			
 			ElectricSignActivity.this.startDisplay();
-		
-			
 		}
-
-		ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
-		
+		//ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
 
        // Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
         //System.out.println(keyCode);
@@ -448,7 +442,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		saveSettings();
 		
 
-		DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
+		//DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
 		
 		// When the user has indicated that we're running on a dedicated device,
 		// also start a watchdog that will check once every 24 hours to see if
@@ -573,6 +567,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	public void doReload() 
 	{
+		try{
 		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
 		if ((isSleepAllowed())&&(isConnectedToNetwork(this) == false)&&(wifi.isWifiEnabled() == false))
@@ -610,6 +605,9 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 				_downloadErrorCount = 0;
 				getAlternateWebView().loadUrl(getUrl());
 			}
+		}}
+		catch(Exception ex){
+			DoLogDebug("Something wrong with Wifi");
 		}
 	}
 	
