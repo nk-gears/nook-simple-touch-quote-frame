@@ -440,6 +440,9 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	public void startDisplay() {
 		saveSettings();
+		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+		wifi.setWifiEnabled(true);
 		
 
 		//DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
@@ -802,7 +805,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		_launchAtStartupSetting.setChecked(  s.getBoolean("launchAtStartup",      true));
 		_allowSleepSetting.setChecked(       s.getBoolean("allowSleep",           false));
 		_writeScreenSaverSetting.setChecked( s.getBoolean("writeScreenSaver",     true));
-		_urlSetting.setText(                 s.getString( "url",                  "http://192.168.1.13:1880/nook_display"));
+		_urlSetting.setText(                 s.getString( "url",                  "http://quote.appdews.com/nook-display/"));
 		_includeStatusTextSetting.setChecked(s.getBoolean("includestatustext",    true));
 		_filePathSetting.setText(            s.getString( "filepath",             "/media/screensavers/ElectricSign/Sign.png"));
 		_enableSelfStartSetting.setChecked(  s.getBoolean("selfstart",            true));
