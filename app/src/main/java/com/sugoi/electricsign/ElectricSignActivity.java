@@ -88,15 +88,19 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 			ElectricSignActivity.this.startDisplay();
 		}else{
 
-			ElectricSignActivity.this.getJSON("https://quote.appdews.com/nook-display/set-var.php?key" + String.valueOf(keyCode));
+
+			
+				ElectricSignActivity.this.getJSON("http://quote.appdews.com/nook-display/set-var.php?key=" + String.valueOf(keyCode));
+			
+			
 
 		}
 		//ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
 
        // Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
-        //System.out.println(keyCode);
+        System.out.println(keyCode);
         return false;
-		// super.onKeyDown(keyCode, event);
+		//super.onKeyDown(keyCode, event);
 
     }
 /*	@Override
