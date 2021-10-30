@@ -1,5 +1,4 @@
 package com.nkdews.quoteframe;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
@@ -10,6 +9,10 @@ import com.nkdews.quoteframe.ElectricSignActivity;
 public class ElectricSignStartupIntentReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {		
 		SharedPreferences s = context.getSharedPreferences(ElectricSignActivity.PREFS_NAME, 0);
+		String str = intent.getAction();
+		//Log.e("ElectricSign",Intent.CATEGORY_LAUNCHER);
+		//Log.i("ElectricSign", str);
+		//Log.i("ElectricSign", "Simple");
 		if ((s.getBoolean("launchAtStartup", false))&&(s.getBoolean("selfstart", false))) {
 			Intent myStarterIntent = new Intent(context, ElectricSignActivity.class);
 			myStarterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);

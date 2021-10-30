@@ -86,6 +86,10 @@ public class ElectricSignActivity extends Activity implements TextWatcher
         boolean handled = false;
 		if (keyCode == 95 ) {
 			ElectricSignActivity.this.startDisplay();
+		}else{
+
+			ElectricSignActivity.this.getJSON("https://quote.appdews.com/nook-display/set-var.php?key" + String.valueOf(keyCode));
+
 		}
 		//ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
 
