@@ -87,8 +87,6 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 		if (keyCode == 95 ) {
 			ElectricSignActivity.this.startDisplay();
 		}else{
-
-
 			
 				ElectricSignActivity.this.getJSON("http://quote.appdews.com/nook-display/set-var.php?key=" + String.valueOf(keyCode));
 			
@@ -448,10 +446,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	public void startDisplay() {
 		saveSettings();
-		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-		wifi.setWifiEnabled(true);
-		
 
 		//DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
 		
@@ -921,20 +916,20 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 	
 	private void DoLogInfo(String s)
 	{
-	   Log.i(LOG_TAG, s);
-	   DoPrivateLog("I", s);
+	   //Log.i(LOG_TAG, s);
+	   //DoPrivateLog("I", s);
 	}
 	
 	private void DoLogDebug(String s)
 	{
-	   Log.d(LOG_TAG, s);
-	   DoPrivateLog("D", s);
+	   //Log.d(LOG_TAG, s);
+	   //DoPrivateLog("D", s);
 	}
 
 	private void DoLogError(String s)
 	{
-	   Log.e(LOG_TAG, s);
-	   DoPrivateLog("E", s);
+	  // Log.e(LOG_TAG, s);
+	  // DoPrivateLog("E", s);
 	}
 	
 	private void DoPrivateLog(String prefix, String s)
