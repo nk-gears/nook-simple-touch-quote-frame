@@ -73,6 +73,8 @@ import android.widget.TextView;
 public class ElectricSignActivity extends Activity implements TextWatcher
 {    boolean started = false;
 
+	 int lastKey=0;
+
      boolean ended = false;
 	
 	@Override
@@ -84,20 +86,20 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean handled = false;
-		if (keyCode == 95 ) {
+		//if (keyCode == 95 ) {
+			//ElectricSignActivity.this.startDisplay();
+			//lastKey=95;
+		//}else{
+			lastKey=keyCode;
 			ElectricSignActivity.this.startDisplay();
-		}else{
-			
-				ElectricSignActivity.this.getJSON("http://quote.appdews.com/nook-display/set-var.php?key=" + String.valueOf(keyCode));
-			
-			
-
-		}
+		//ElectricSignActivity.this.getJSON("http://quote.appdews.com/nook-display/set-var.php?key=" + String.valueOf(keyCode));
+	
+		//}
 		//ElectricSignActivity.this.getJSON("http://192.168.1.13:1880/rpi-switch?key=" + String.valueOf(keyCode));
 
        // Toast.makeText(getApplicationContext(), String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
-        System.out.println(keyCode);
-        return false;
+        //System.out.println(keyCode);
+        return true;
 		//super.onKeyDown(keyCode, event);
 
     }
@@ -405,6 +407,7 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 				String battPercent = "";
 				int bp = (int)(100.0*getBatteryRemainingPercent());
 				if (bp >= 0) battPercent = " (Battery at "+bp+"%)";
+				
 				_statusText.setText("Updated "+dateTimeStr+battPercent);
 			}
 			_displayingSign = true;
@@ -445,8 +448,8 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 	public void onTextChanged(CharSequence s, int start, int before, int count) {/*empty */}
 
 	public void startDisplay() {
-		saveSettings();
-
+		if(lastKey==0)
+			saveSettings();
 
 		//DoLogInfo("Starting sign display "+this+" in process #" + android.os.Process.myPid());
 		
@@ -840,7 +843,8 @@ public class ElectricSignActivity extends Activity implements TextWatcher
 
 	private String getUrl()
 	{
-		String ret = _urlSetting.getText().toString();
+		//we can even pull a dynamic url from here and pass the data
+		String ret = _urlSetting.getText().toString() + "?k=" + lastKey ;
 		if (URLUtil.isValidUrl(ret) == false) ret = "http://"+ret;
 		return ret;
 	} 
