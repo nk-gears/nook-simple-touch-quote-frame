@@ -14,4 +14,4 @@ jobs:
           vercel-args: '--prod' #Optional
           vercel-project-id: prj_umqQVpUYTteW2TVKX16LDKGADA33 #Required 
           vercel-org-id: 0K8HAoJGVWDdqFyynTzuYPN7
-          working-directory: ./
+          working-directory: ./python-vercel
