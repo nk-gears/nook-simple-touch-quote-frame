@@ -20,7 +20,7 @@ def default_route():
     resp=requests.get("https://api.quotable.io/random?maxLength=120")
     json=resp.json()
     keyCode = request.args.get('k')
-    tplName="quote";
+    tplName="time";
     if keyCode is None:
         keyCode=""
     else:
